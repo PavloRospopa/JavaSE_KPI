@@ -4,10 +4,6 @@ public abstract class SkiPass {
     private Long id;
     private final String owner;
     private final SkiPassType type;
-    //private int numberOfLifts;
-    //private final LocalDateTime activationDate;
-    //private final LocalDateTime expirationDate;
-
 
     public SkiPass(String owner, SkiPassType type) {
         this.owner = owner;

@@ -15,4 +15,14 @@ public class SkiPassWithLimitedLifts extends SkiPass {
     public void setNumberOfLifts(int numberOfLifts) {
         this.numberOfLifts = numberOfLifts;
     }
+
+    @Override
+    public String toString() {
+        return "SkiPassWithLimitedLifts{" +
+                "id=" + super.getId() +
+                ", owner='" + super.getOwner() + '\'' +
+                ", type=" + super.getType() +
+                ", number of lifts=" + this.numberOfLifts +
+                '}';
+    }
 }

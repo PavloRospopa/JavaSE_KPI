@@ -19,4 +19,15 @@ public class SkiPassWithValidityPeriod extends SkiPass{
     public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
+
+    @Override
+    public String toString() {
+        return "SkiPassWithValidityPeriod{" +
+                "id=" + super.getId() +
+                ", owner='" + super.getOwner() + '\'' +
+                ", type=" + super.getType() +
+                ", activation date=" + activationDate +
+                ", expiration date=" + expirationDate +
+                '}';
+    }
 }
