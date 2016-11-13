@@ -1,5 +1,7 @@
 package com.gmail.at.rospopa.pavlo;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,6 +16,14 @@ public class SkiPassSystem {
         return nextId++;
     }
 
+    public Set<SkiPass> getSkiPasses() {
+        return skiPasses;
+    }
+
+    public Set<SkiPass> getBannedSkiPasses() {
+        return bannedSkiPasses;
+    }
+
     public SkiPass createSkiPassWithLimitedLifts(String owner, SkiPassType type, NumberOfLifts numberOfLifts){
         SkiPassWithLimitedLifts skiPassInstance = new SkiPassWithLimitedLifts(owner, type, numberOfLifts.getValue());
         skiPassInstance.setId(getNextId());
@@ -23,23 +33,35 @@ public class SkiPassSystem {
     }
 
     public SkiPass createSkiPassWithValidityPeriod(String owner, SkiPassType type, ValidityPeriod validityPeriod,
-                                                                     LocalDateTime activationDate){
-        LocalDateTime expirationDate = activationDate.plus(validityPeriod.getDuration());
-        //should to be implemented in upper layer
-        if (validityPeriod != ValidityPeriod.FROM9TO13 && validityPeriod != ValidityPeriod.FROM13TO17){
-            expirationDate = expirationDate.withHour(0).withMinute(1);
+                                                                     LocalDate activationDate){
+        LocalDateTime activationDateTime;
+        LocalDateTime expirationDateTime;
+        switch (validityPeriod){
+            case FROM9TO13:
+                activationDateTime = LocalDateTime.of(activationDate, ValidityPeriod.FIRSTHOUR);
+                expirationDateTime = activationDateTime.plus(validityPeriod.getDuration());
+                break;
+            case FROM13TO17:
+                activationDateTime = LocalDateTime.of(activationDate, ValidityPeriod.MIDDLEHOUR);
+                expirationDateTime = activationDateTime.plus(validityPeriod.getDuration());
+                break;
+            default:
+                activationDateTime = LocalDateTime.of(activationDate, ValidityPeriod.FIRSTHOUR);
+                expirationDateTime = activationDateTime.plus(validityPeriod.getDuration()).with(ValidityPeriod.LASTHOUR);
         }
 
-        SkiPassWithValidityPeriod skiPassInstance = new SkiPassWithValidityPeriod(owner, type, activationDate, expirationDate);
+        SkiPassWithValidityPeriod skiPassInstance = new SkiPassWithValidityPeriod(owner, type, activationDateTime, expirationDateTime);
         skiPassInstance.setId(getNextId());
         skiPasses.add(skiPassInstance);
 
         return skiPassInstance;
     }
 
-    public SkiPass createSeasonSkiPass(String owner, LocalDateTime activationDate, LocalDateTime expirationDate){
+    public SkiPass createSeasonSkiPass(String owner, LocalDate activationDate, LocalDate expirationDate){
         SkiPassWithValidityPeriod skiPassInstance = new SkiPassWithValidityPeriod(owner, SkiPassType.SeasonCard,
-                activationDate, expirationDate);
+                LocalDateTime.of(activationDate, ValidityPeriod.FIRSTHOUR),
+                LocalDateTime.of(expirationDate, ValidityPeriod.LASTHOUR));
+
         skiPassInstance.setId(getNextId());
         skiPasses.add(skiPassInstance);
 
@@ -78,8 +100,26 @@ public class SkiPassSystem {
     }
 
     private boolean validateSkiPassWithLimitedLifts(SkiPassWithLimitedLifts skiPass){
+        DayOfWeek today = LocalDateTime.now().getDayOfWeek();
+        switch (today){
+            case SATURDAY:
+            case SUNDAY:
+                if (skiPass.getType()!=SkiPassType.WeekendCard)
+                    return false;
+                break;
+            case MONDAY:
+            case TUESDAY:
+            case WEDNESDAY:
+            case THURSDAY:
+            case FRIDAY:
+                if (skiPass.getType()!=SkiPassType.WeekdayCard)
+                    return false;
+                break;
+        }
+
         if (skiPass.getNumberOfLifts() == 0)
             return false;
+
         return true;
     }
 }

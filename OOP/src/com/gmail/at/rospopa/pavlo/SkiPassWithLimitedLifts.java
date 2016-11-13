@@ -12,8 +12,8 @@ public class SkiPassWithLimitedLifts extends SkiPass {
         return numberOfLifts;
     }
 
-    public void setNumberOfLifts(int numberOfLifts) {
-        this.numberOfLifts = numberOfLifts;
+    public void decrementNumberOfLifts() {
+        numberOfLifts--;
     }
 
     @Override
