@@ -8,13 +8,18 @@ public class Main {
     public static void main(String[] args) {
         SkiPassSystem skiPassSystem = new SkiPassSystem();
 
-        SkiPass prskiPass = skiPassSystem.createSkiPassWithLimitedLifts("Pavlo Rospopa", SkiPassType.WeekendCard, NumberOfLifts.TWENTY);
-        SkiPass anotherprskiPass = skiPassSystem.createSkiPassWithValidityPeriod("Pavlo Rospopa", SkiPassType.WeekdayCard, ValidityPeriod.TWODAYS,
-                LocalDate.of(2016, Month.NOVEMBER, 14));
-        SkiPass mrskiPass = skiPassSystem.createSkiPassWithValidityPeriod("Mike Rull", SkiPassType.WeekdayCard, ValidityPeriod.FROM9TO13,
-                LocalDate.of(2016, Month.NOVEMBER, 14));
+        SkiPass prskiPass = skiPassSystem.createSkiPassWithLimitedLifts("Pavlo Rospopa", SkiPassType.WeekendCard,
+                NumberOfLifts.TWENTY);
+
+        SkiPass anotherprskiPass = skiPassSystem.createSkiPassWithValidityPeriod("Pavlo Rospopa",
+                SkiPassType.WeekdayCard, ValidityPeriod.TWODAYS, LocalDate.of(2016, Month.NOVEMBER, 14));
+
+        SkiPass mrskiPass = skiPassSystem.createSkiPassWithValidityPeriod("Mike Rull", SkiPassType.WeekdayCard,
+                ValidityPeriod.FROM9TO13, LocalDate.of(2016, Month.NOVEMBER, 14));
+
         SkiPass cbskiPass = skiPassSystem.createSeasonSkiPass("Conor Black", LocalDate.of(2016, Month.NOVEMBER, 1),
                 LocalDate.of(2017, Month.FEBRUARY, 1));
+
         skiPassSystem.createSkiPassWithLimitedLifts("James Zabieli", SkiPassType.WeekdayCard, NumberOfLifts.FIFTY);
         skiPassSystem.createSkiPassWithLimitedLifts("Bain Sand", SkiPassType.WeekendCard, NumberOfLifts.TEN);
 

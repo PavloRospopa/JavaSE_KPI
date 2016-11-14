@@ -24,7 +24,10 @@ public class SkiPassSystem {
         return bannedSkiPasses;
     }
 
-    public SkiPass createSkiPassWithLimitedLifts(String owner, SkiPassType type, NumberOfLifts numberOfLifts){
+    public SkiPass createSkiPassWithLimitedLifts(String owner, SkiPassType type, NumberOfLifts numberOfLifts)
+            throws IllegalArgumentException {
+        if (type == SkiPassType.SeasonCard) throw new IllegalArgumentException();
+
         SkiPassWithLimitedLifts skiPassInstance = new SkiPassWithLimitedLifts(owner, type, numberOfLifts.getValue());
         skiPassInstance.setId(getNextId());
         skiPasses.add(skiPassInstance);
@@ -33,7 +36,9 @@ public class SkiPassSystem {
     }
 
     public SkiPass createSkiPassWithValidityPeriod(String owner, SkiPassType type, ValidityPeriod validityPeriod,
-                                                                     LocalDate activationDate){
+                                                   LocalDate activationDate)  throws IllegalArgumentException {
+        if (type == SkiPassType.SeasonCard) throw new IllegalArgumentException();
+
         LocalDateTime activationDateTime;
         LocalDateTime expirationDateTime;
         switch (validityPeriod){

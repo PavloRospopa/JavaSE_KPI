@@ -28,16 +28,17 @@ public abstract class SkiPass {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object other) {
+        if (this == other) return true;
 
-        SkiPass skiPass = (SkiPass) o;
+        if (other instanceof SkiPass) {
+            SkiPass that = (SkiPass) other;
 
-        if (id != null ? !id.equals(skiPass.id) : skiPass.id != null) return false;
-        if (owner != null ? !owner.equals(skiPass.owner) : skiPass.owner != null) return false;
-        return type == skiPass.type;
-
+            if (id != null ? !id.equals(that.id) : that.id != null) return false;
+            if (owner != null ? !owner.equals(that.owner) : that.owner != null) return false;
+            return type == that.type;
+        }
+        return false;
     }
 
     @Override
