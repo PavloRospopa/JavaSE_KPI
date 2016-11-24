@@ -85,6 +85,7 @@ public class SkiPassSystem {
         if (!skiPasses.contains(skiPass))
             return false;
 
+        //bad practice. implement this method in SkiPass
         if (skiPass instanceof SkiPassWithValidityPeriod){
             return validateSkiPassWithValidityPeriod((SkiPassWithValidityPeriod)skiPass);
         }
