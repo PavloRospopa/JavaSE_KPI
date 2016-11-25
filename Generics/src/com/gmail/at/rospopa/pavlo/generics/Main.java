@@ -8,13 +8,16 @@ import com.gmail.at.rospopa.pavlo.generics.vehicles.*;
 public class Main {
 
     public static void main(String[] args) {
-        VehicleFactory<Human> factory = new BusFactory<>();
-        Vehicle<Human> vehicle = factory.createVehicle("Bus1");
+        Vehicle<Human> vehicle1 = new Bus<>(1L, "Bus 1", 20);
+        Vehicle<Policeman> vehicle2 = new Bus<>(2L, "Bus 2", 10);
+        Vehicle<Fireman> vehicle3 = new Firetruck<>(3L, "Firetruck 1", 7);
+        Car<Human> car = new Taxi<>(4L, "Taxi", 5);
+        try {
+            vehicle1.seatPassenger(new Human(1L, "Alan"));
 
-        Vehicle<Human> vehicle1 = factory.createVehicle("Bus2");
-
-        System.out.println(vehicle);
-
+        }
+        catch (Exception e)
+        {}
 
     }
 }

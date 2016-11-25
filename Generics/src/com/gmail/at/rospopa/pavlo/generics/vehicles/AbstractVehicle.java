@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class VehicleImpl<T extends Human> implements Vehicle<T>{
+public abstract class AbstractVehicle<T extends Human> implements Vehicle<T>{
     private final Long id;
     private final int capacity;
     private String name;
     private List<T> passengers = new ArrayList<>();
 
-    public VehicleImpl(Long id, String name, int capacity) {
+    public AbstractVehicle(Long id, String name, int capacity) {
         this.id = id;
         this.name = name;
         this.capacity = capacity;
@@ -58,7 +58,7 @@ public abstract class VehicleImpl<T extends Human> implements Vehicle<T>{
 
     @Override
     public String toString() {
-        return "VehicleImpl{" +
+        return "AbstractVehicle{" +
                 "id=" + id +
                 ", vehicle name='" + name + '\'' +
                 ", count of passengers=" + getCount() +

@@ -2,7 +2,7 @@ package com.gmail.at.rospopa.pavlo.generics.vehicles;
 
 import com.gmail.at.rospopa.pavlo.generics.passengers.Human;
 
-public class Bus<T extends Human> extends VehicleImpl<T> {
+public class Bus<T extends Human> extends AbstractVehicle<T> {
 
     public Bus(Long id, String name, int capacity) {
         super(id, name, capacity);

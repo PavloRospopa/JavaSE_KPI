@@ -1,5 +1,6 @@
 package com.gmail.at.rospopa.pavlo.generics.road;
 
+import com.gmail.at.rospopa.pavlo.generics.passengers.Human;
 import com.gmail.at.rospopa.pavlo.generics.vehicles.Vehicle;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +8,6 @@ import java.util.List;
 
 public class RoadImpl implements Road {
     private String roadName;
-
     private List<Vehicle> vehiclesInRoad = new ArrayList<>();
 
     public RoadImpl(String roadName) {
@@ -36,8 +36,16 @@ public class RoadImpl implements Road {
     }
 
     @Override
-    public void addVehicleToRoad(Vehicle vehicle) {
+    public void addVehicleToRoad(Vehicle<? extends Human> vehicle) {
+        if (!vehiclesInRoad.contains(vehicle))
+            vehiclesInRoad.add(vehicle);
+    }
 
-        vehiclesInRoad.add(vehicle);
+    @Override
+    public String toString() {
+        return "Road{" +
+                "road name='" + roadName + '\'' +
+                ", vehiclesInRoad=" + vehiclesInRoad +
+                '}';
     }
 }
