@@ -12,21 +12,22 @@ public class Runner {
     private static final Logger logger = LogManager.getLogger();
 
     public static void main(String[] args) {
+        char ch = 'A';
         File inFile = new File("in.txt");
-        File encodedFile = new File("encoded.txt");
-        File outFile = new File("out.txt");
 
-        Reader reader = null;
-        Writer writer = null;
-        try {
-            reader = new EncodingReader(new FileReader(inFile), 'A');
-            //writer = new DecodingWriter(new FileWriter(encodedFile), 'A');
-            writer = new PrintWriter(System.out);
-            //writer = new DecodingWriter(new OutputStreamWriter(System.out), 'A');
-
+        try(Reader reader = new EncodingReader(new FileReader(inFile), ch);
+            PrintWriter writer = new PrintWriter(System.out);
+            Reader newReader = new EncodingReader(new FileReader(inFile), ch);
+            Writer newWriter = new DecodingWriter(writer, ch)) {
             int c;
             while((c = reader.read()) != -1) {
                 writer.write(c);
+            }
+
+            writer.println();
+
+            while((c = newReader.read()) != -1) {
+                newWriter.write(c);
             }
         }
         catch (FileNotFoundException e){
@@ -34,22 +35,6 @@ public class Runner {
         }
         catch (IOException e){
             logger.fatal(e);
-        }
-        finally {
-            if(reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    logger.warn("Exception occurred during closing EncodingReader instance", e);
-                }
-            }
-            if (writer != null) {
-                try {
-                    writer.close();
-                } catch (IOException e) {
-                    logger.warn("Exception occurred during closing DecodingWriter instance", e);
-                }
-            }
         }
     }
 }

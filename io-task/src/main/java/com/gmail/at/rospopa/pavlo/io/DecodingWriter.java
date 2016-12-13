@@ -26,6 +26,11 @@ public class DecodingWriter extends FilterWriter {
         this.decodingChar = decodingChar;
     }
 
+    /**
+     * Decodes and writes a single character.
+     *
+     * @exception  IOException  If an I/O error occurs
+     */
     public void write(int c) throws IOException {
         super.write(c - decodingChar);
     }
