@@ -31,7 +31,7 @@ public class Runner {
             }
         }
         catch (FileNotFoundException e){
-            logger.log(Level.FATAL, "file {0} not found", inFile);
+            logger.log(Level.FATAL, String.format("file %s not found", inFile));
         }
         catch (IOException e){
             logger.fatal(e);
